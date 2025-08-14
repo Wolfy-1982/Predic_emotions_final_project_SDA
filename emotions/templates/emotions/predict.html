@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Go Emotions Prediction</title>
+</head>
+<body>
+    <h1> Hello, how are you feeling ?</h1>
+    <form method="post">
+        {% csrf_token %}
+        <textarea name="text" rows="5" cols="60"></textarea><br><br>
+        <button type="submit"> How i feel?</button>
+    </form>
+
+    {% if prediction_ml %}
+    <h2>ML Prediction:  {{ prediction_ml.label }}</h2>
+    <p>Confidence: {{prediction_ml.confidence | floatformat:2 }}</p>
+    {% endif %}
+
+    {% if prediction_nn %}
+    <h2>NN Prediction: {{ prediction_nn.label }}</h2>
+    <ul>
+        {% for item in prediction_nn %}
+            <li>{{ item.label | capfirst }} - Confidence: {{ item.confidence | floatformat:2 }} %</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+</body>
+</html>
